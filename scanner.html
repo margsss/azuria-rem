@@ -138,7 +138,7 @@
         document.getElementById('scanner-logout').style.display = 'block';
         const iframe = document.createElement('iframe');
         iframe.className = 'scanner-frame';
-        iframe.src = SCANNER_URL + '/?token=' + SCANNER_TOKEN;
+        iframe.src = SCANNER_URL + '/?token=' + SCANNER_TOKEN + '&embed=1';
         iframe.setAttribute('loading', 'lazy');
         document.getElementById('scanner-wrap').appendChild(iframe);
       }
