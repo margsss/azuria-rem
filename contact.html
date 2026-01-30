@@ -168,5 +168,30 @@
   </div>
 
   <script src="script.js"></script>
+  <script>
+    document.getElementById('contact-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type="submit"]');
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<span class="shimmer-spark"></span>Envoi...<span class="shimmer-highlight"></span>';
+      btn.disabled = true;
+      try {
+        const data = Object.fromEntries(new FormData(e.target));
+        const resp = await fetch('https://web-production-fd1b3.up.railway.app/contact', {
+          method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)
+        });
+        const res = await resp.json();
+        if (res.ok) {
+          e.target.innerHTML = '<div style="text-align:center;padding:3rem 0"><h3 style="color:var(--silver-bright,#e0e8f0);margin-bottom:.5rem">Message envoyé</h3><p style="color:var(--silver-dim,rgba(160,170,185,.5))">Nous vous répondrons dans les plus brefs délais.</p></div>';
+        } else {
+          btn.innerHTML = orig; btn.disabled = false;
+          alert('Erreur: ' + (res.error || 'Veuillez réessayer.'));
+        }
+      } catch(err) {
+        btn.innerHTML = orig; btn.disabled = false;
+        alert('Erreur réseau. Veuillez réessayer.');
+      }
+    });
+  </script>
 </body>
 </html>
