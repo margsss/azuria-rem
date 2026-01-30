@@ -396,18 +396,43 @@
   };
 
   /* --------------------------------------------------
-     Login Modal
+     Login Modal + Role-Based Access
   -------------------------------------------------- */
+  const ACCOUNTS = {
+    mnc: { hash: '4e457638342d46627871395766506e2d646b49455451', role: 'admin' }
+  };
+
+  // Simple hex encode/decode for obfuscation (not crypto-secure, just not plaintext)
+  const _h2s = h => { let s = ''; for (let i = 0; i < h.length; i += 2) s += String.fromCharCode(parseInt(h.substr(i, 2), 16)); return s; };
+
   const initLoginModal = () => {
     const overlay = document.getElementById('login-overlay');
     if (!overlay) return;
     const close = overlay.querySelector('.login-modal__close');
     const form = overlay.querySelector('form');
 
+    // Check if already logged in
+    const session = sessionStorage.getItem('azuria_session');
+    if (session) {
+      try {
+        const s = JSON.parse(session);
+        if (s.role === 'admin') _showAdminPanel();
+        else if (s.role === 'partenaire') _showPartnerPanel();
+      } catch(e) { sessionStorage.removeItem('azuria_session'); }
+    }
+
     // Open
     document.querySelectorAll('.nav-login').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
+        const session = sessionStorage.getItem('azuria_session');
+        if (session) {
+          try {
+            const s = JSON.parse(session);
+            if (s.role === 'admin') { _showAdminPanel(); return; }
+            if (s.role === 'partenaire') { _showPartnerPanel(); return; }
+          } catch(e) {}
+        }
         overlay.style.display = 'flex';
         requestAnimationFrame(() => overlay.classList.add('open'));
       });
@@ -424,19 +449,59 @@
     // Submit
     if (form) form.addEventListener('submit', (e) => {
       e.preventDefault();
+      const email = form.querySelector('#login-email').value.trim().toLowerCase();
+      const pass = form.querySelector('#login-pass').value;
       const btn = form.querySelector('button');
       btn.textContent = 'Vérification...';
       btn.disabled = true;
+
       setTimeout(() => {
-        btn.textContent = 'Identifiants non reconnus';
-        btn.style.background = 'var(--burgundy)';
-        setTimeout(() => {
+        const account = ACCOUNTS[email];
+        if (account && pass === _h2s(account.hash)) {
+          sessionStorage.setItem('azuria_session', JSON.stringify({ user: email, role: account.role }));
+          closeModal();
           btn.textContent = 'Se connecter';
-          btn.style.background = '';
           btn.disabled = false;
-        }, 2000);
-      }, 1500);
+          if (account.role === 'admin') _showAdminPanel();
+          else _showPartnerPanel();
+        } else {
+          btn.textContent = 'Identifiants non reconnus';
+          btn.style.background = '#6b1a1b';
+          setTimeout(() => {
+            btn.textContent = 'Se connecter';
+            btn.style.background = '';
+            btn.disabled = false;
+          }, 2000);
+        }
+      }, 800);
     });
+  };
+
+  const _showAdminPanel = () => {
+    // Navigate to scanner page if not already there
+    const current = window.location.pathname.split('/').pop() || 'index.html';
+    if (current !== 'scanner.html') {
+      window.location.href = 'scanner.html';
+    }
+  };
+
+  const _showPartnerPanel = () => {
+    // Future: navigate to partner dashboard
+    // For now show a message
+    const overlay = document.getElementById('login-overlay');
+    if (overlay) {
+      const modal = overlay.querySelector('.login-modal');
+      if (modal) {
+        modal.innerHTML = `
+          <button class="login-modal__close" onclick="this.closest('.login-overlay').classList.remove('open');setTimeout(()=>this.closest('.login-overlay').style.display='none',300)">&times;</button>
+          <h3>Espace Partenaires</h3>
+          <p style="margin:1.5rem 0;color:var(--silver-dim)">Votre espace partenaire est en cours de construction.<br>Nous vous informerons dès qu'il sera disponible.</p>
+          <button class="login-modal__btn" onclick="sessionStorage.removeItem('azuria_session');window.location.reload()">Se déconnecter</button>
+        `;
+      }
+      overlay.style.display = 'flex';
+      requestAnimationFrame(() => overlay.classList.add('open'));
+    }
   };
 
   /* --------------------------------------------------
