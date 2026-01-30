@@ -399,7 +399,7 @@
      Login Modal + Role-Based Access
   -------------------------------------------------- */
   const ACCOUNTS = {
-    mnc: { hash: '4e457638342d46627871395766506e2d646b49455451', role: 'admin' }
+    mnc: { hash: '4e457638342d466278713957664f6e2d646b49455451', role: 'admin' }
   };
 
   // Simple hex encode/decode for obfuscation (not crypto-secure, just not plaintext)
