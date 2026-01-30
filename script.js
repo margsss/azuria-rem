@@ -411,15 +411,8 @@
     const close = overlay.querySelector('.login-modal__close');
     const form = overlay.querySelector('form');
 
-    // Check if already logged in
-    const session = sessionStorage.getItem('azuria_session');
-    if (session) {
-      try {
-        const s = JSON.parse(session);
-        if (s.role === 'admin') _showAdminPanel();
-        else if (s.role === 'partenaire') _showPartnerPanel();
-      } catch(e) { sessionStorage.removeItem('azuria_session'); }
-    }
+    // Check if already logged in — only auto-act on Espace Partenaires click, not page load
+    // (so admins can browse normal pages without being redirected to scanner)
 
     // Open
     document.querySelectorAll('.nav-login').forEach(btn => {
