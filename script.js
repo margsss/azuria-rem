@@ -378,22 +378,8 @@
     });
   };
 
-  /* --------------------------------------------------
-     Contact form → mailto
-  -------------------------------------------------- */
-  const initForm = () => {
-    const form = document.getElementById('contact-form');
-    if (!form) return;
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const fd = new FormData(form);
-      const subject = encodeURIComponent('Contact depuis azuria-rem.com');
-      const body = encodeURIComponent(
-        `Nom : ${fd.get('nom')}\nSociété : ${fd.get('societe') || '—'}\nE-mail : ${fd.get('email')}\nTéléphone : ${fd.get('telephone') || '—'}\n\nMessage :\n${fd.get('message')}`
-      );
-      window.location.href = `mailto:mcapelli@azuria-rem.com?subject=${subject}&body=${body}`;
-    });
-  };
+  /* Contact form is handled inline on contact.html */
+  const initForm = () => {};
 
   /* --------------------------------------------------
      Login Modal + Role-Based Access
