@@ -7,8 +7,76 @@
   <meta name="description" content="Découvrez l'expertise d'Azuria REM en développement, programme et technique immobilière.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800;900&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    .about-hero-img {
+      width:100%; height:400px; object-fit:cover; border-radius:12px;
+      margin-bottom:3rem;
+      border:1px solid rgba(200,210,225,.12);
+    }
+    .about-quote {
+      text-align:center; padding:4rem 2rem; position:relative;
+    }
+    .about-quote::before {
+      content:'\201C'; position:absolute; top:0; left:50%; transform:translateX(-50%);
+      font-size:8rem; line-height:1; color:rgba(176,141,142,.15);
+      font-family:'Caveat', cursive;
+    }
+    .about-quote blockquote {
+      font-family:'Caveat', cursive; font-size:2rem; line-height:1.6;
+      color:var(--text); font-weight:400; max-width:700px; margin:0 auto 1.5rem;
+      font-style:normal;
+    }
+    .about-quote cite {
+      font-family:'Archivo', sans-serif; font-style:normal;
+      font-size:.95rem; color:var(--green, #b08d8e); font-weight:500;
+      letter-spacing:.05em;
+    }
+    .about-team-section {
+      position:relative; overflow:hidden; border-radius:12px;
+      margin:3rem 0; border:1px solid rgba(200,210,225,.12);
+    }
+    .about-team-section img {
+      width:100%; height:350px; object-fit:cover; display:block;
+    }
+    .about-team-overlay {
+      position:absolute; bottom:0; left:0; right:0;
+      padding:3rem 2.5rem 2rem;
+      background:linear-gradient(transparent, rgba(6,15,30,.9) 40%);
+    }
+    .about-team-overlay h2 {
+      color:var(--silver-bright, #e0e8f0); font-size:1.6rem; margin-bottom:.5rem;
+    }
+    .about-team-overlay p {
+      color:rgba(200,210,225,.6); font-size:1rem; max-width:500px;
+    }
+    .about-values {
+      display:grid; grid-template-columns:repeat(3, 1fr); gap:2rem;
+      margin:3rem 0;
+    }
+    .about-value {
+      text-align:center; padding:2rem 1.5rem;
+    }
+    .about-value__icon {
+      font-size:2.5rem; margin-bottom:1rem; display:block;
+      background:linear-gradient(135deg, rgba(176,141,142,.2), rgba(200,210,225,.1));
+      width:70px; height:70px; border-radius:50%; margin:0 auto 1rem;
+      display:flex; align-items:center; justify-content:center;
+      border:1px solid rgba(200,210,225,.12);
+    }
+    .about-value h3 {
+      color:var(--silver-bright, #e0e8f0); font-size:1.1rem; margin-bottom:.5rem;
+    }
+    .about-value p {
+      color:rgba(200,210,225,.5); font-size:.9rem; line-height:1.6;
+    }
+    @media (max-width:768px) {
+      .about-values { grid-template-columns:1fr; }
+      .about-quote blockquote { font-size:1.5rem; }
+      .about-hero-img { height:250px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -39,33 +107,85 @@
     </div>
   </div>
 
+  <!-- Atmospheric hero image -->
+  <section>
+    <div class="container">
+      <img src="img/about-hero.webp" alt="Plans architecturaux" class="about-hero-img blur-fade" loading="lazy">
+    </div>
+  </section>
+
+  <!-- Handwritten quote -->
   <section>
     <div class="container--narrow">
-      <div class="blur-fade" style="text-align:center; padding:0 0 3rem">
-        <p style="font-size:1.3rem; color:var(--text); line-height:1.8; font-weight:300">
-          Nos équipes sont des spécialistes qui interviennent dans chaque secteur spécifique.
-        </p>
+      <div class="about-quote blur-fade">
+        <blockquote>Chaque projet est une promesse faite aux artisans qui y travailleront demain. Nous construisons bien plus que des murs — nous construisons leur avenir.</blockquote>
+        <cite>Margaux Capelli</cite>
       </div>
     </div>
+  </section>
+
+  <!-- Team silhouette with overlay -->
+  <section>
     <div class="container">
+      <div class="about-team-section blur-fade">
+        <img src="img/about-team.webp" alt="L'équipe Azuria REM" loading="lazy">
+        <div class="about-team-overlay">
+          <h2>Une équipe de spécialistes</h2>
+          <p>Nos équipes interviennent dans chaque secteur spécifique — développement foncier, programmation immobilière et suivi technique.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section>
+    <div class="container">
+      <div class="about-values">
+        <div class="about-value blur-fade blur-fade-delay-1">
+          <span class="about-value__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(176,141,142,.8)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+          <h3>Rigueur</h3>
+          <p>Chaque cahier des charges est respecté avec une précision absolue, du premier coup de crayon à la remise des clés.</p>
+        </div>
+        <div class="about-value blur-fade blur-fade-delay-2">
+          <span class="about-value__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(176,141,142,.8)" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></span>
+          <h3>Proximité</h3>
+          <p>Nous sommes à l'écoute de chaque locataire et investisseur, construisant des relations durables fondées sur la confiance.</p>
+        </div>
+        <div class="about-value blur-fade blur-fade-delay-3">
+          <span class="about-value__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(176,141,142,.8)" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <h3>Excellence</h3>
+          <p>Des ouvrages de qualité qui valorisent le patrimoine immobilier et offrent un cadre de travail optimal.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Expertise cards -->
+  <section>
+    <div class="container">
+      <div class="section-header blur-fade">
+        <span class="eyebrow">Expertise</span>
+        <h2>Nos métiers</h2>
+        <div class="divider"></div>
+      </div>
       <div class="expertise-grid">
         <article class="expertise-card blur-fade blur-fade-delay-1">
           <span class="expertise-card__number">01</span>
           <div class="divider"></div>
           <h3>Développement</h3>
-          <p>Nos développeurs sont à votre écoute afin d'initier tout site.</p>
+          <p>Nos développeurs sont à votre écoute afin d'initier tout site. Identification foncière, études de faisabilité, montage juridique et financier.</p>
         </article>
         <article class="expertise-card blur-fade blur-fade-delay-2">
           <span class="expertise-card__number">02</span>
           <div class="divider"></div>
           <h3>Programme</h3>
-          <p>Nos responsables de programme intègrent les demandes du locataire en lien avec le marché.</p>
+          <p>Nos responsables de programme intègrent les demandes du locataire en lien avec le marché. Conception, aménagement et optimisation des espaces.</p>
         </article>
         <article class="expertise-card blur-fade blur-fade-delay-3">
           <span class="expertise-card__number">03</span>
           <div class="divider"></div>
           <h3>Technique</h3>
-          <p>Rigueur et professionnalisme permettent la réalisation d'ouvrage de qualité en respectant le cahier des charges.</p>
+          <p>Rigueur et professionnalisme permettent la réalisation d'ouvrage de qualité en respectant le cahier des charges. Suivi de chantier et livraison clés en main.</p>
         </article>
       </div>
     </div>
