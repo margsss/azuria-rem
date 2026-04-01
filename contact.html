@@ -177,7 +177,7 @@
       btn.disabled = true;
       try {
         const data = Object.fromEntries(new FormData(e.target));
-        const resp = await fetch('https://web-production-fd1b3.up.railway.app/contact', {
+        const resp = await fetch('https://idf-scanner-production.up.railway.app/contact', {
           method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)
         });
         const res = await resp.json();
